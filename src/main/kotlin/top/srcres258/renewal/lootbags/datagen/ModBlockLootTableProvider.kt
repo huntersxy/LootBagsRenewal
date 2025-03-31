@@ -16,9 +16,24 @@ class ModBlockLootTableProvider(
     registries: HolderLookup.Provider
 ) : BlockLootSubProvider(setOf(), FeatureFlags.REGISTRY.allFlags(), registries) {
     override fun generate() {
-        dropSelf(ModBlocks.LOOT_RECYCLER.get())
         dropSelf(ModBlocks.BAG_OPENER.get())
+
         add(ModBlocks.BAG_STORAGE.get()) { block ->
+            LootTable.lootTable()
+                .withPool(applyExplosionDecay(
+                    block,
+                    LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1F))
+                        .add(
+                            LootItem.lootTableItem(block)
+                                .apply(
+                                    CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                                        .include(ModDataComponents.BAG_STORAGE.get())
+                                )
+                        )
+                ))
+        }
+        add(ModBlocks.LOOT_RECYCLER.get()) { block ->
             LootTable.lootTable()
                 .withPool(applyExplosionDecay(
                     block,
