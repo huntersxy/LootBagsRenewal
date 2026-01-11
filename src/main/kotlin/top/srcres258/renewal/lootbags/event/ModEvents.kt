@@ -13,6 +13,10 @@ import top.srcres258.renewal.lootbags.util.newItemEntitiesForDropping
 object ModEvents {
     @SubscribeEvent
     fun onLivingDrops(event: LivingDropsEvent) {
+        // Skip player entities to prevent loot bags from dropping when players are killed
+        if (event.entity.type == EntityType.PLAYER) {
+            return
+        }
         // Try to add loot bags to the drops list whenever a living entity drops items.
         for (bagType in LootBagType.entries) {
             if (!bagType.droppable) {
