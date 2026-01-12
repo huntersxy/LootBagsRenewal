@@ -1,6 +1,7 @@
 package top.srcres258.renewal.lootbags.event
 
 import net.minecraft.util.Mth
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.ItemStack
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
